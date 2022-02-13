@@ -42,7 +42,7 @@ const Home: NextPage = () => {
     const data = await res.json();
     const sentiment = data.score;
     let category = [];
-    if (data.categories[0]) {
+    if (data.categories.length) {
       category = data.categories[0].name.split("/");
       category.shift();
     }

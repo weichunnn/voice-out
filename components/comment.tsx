@@ -16,24 +16,24 @@ import {
   Link,
   Wrap,
   WrapItem,
-} from '@chakra-ui/react'
-import { FaExpandAlt, FaMailBulk } from 'react-icons/fa'
-import { format } from 'date-fns'
+} from "@chakra-ui/react";
+import { FaExpandAlt, FaMailBulk } from "react-icons/fa";
+import { format } from "date-fns";
 
-import Upvotes from './upvotes'
+import Upvotes from "./upvotes";
 
 export default function Comment({ comment }: { comment: any }) {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const sentimentColor = (score: number) => {
     if (score >= 0.25 && score <= 1.0) {
-      return ['green', '😀']
+      return ["green", "😀"];
     } else if (score >= -1.0 && score <= -0.25) {
-      return ['red', '😡']
+      return ["red", "😡"];
     } else {
-      return ['yellow', '😐']
+      return ["yellow", "😐"];
     }
-  }
+  };
 
   return (
     <>
@@ -60,7 +60,7 @@ export default function Comment({ comment }: { comment: any }) {
                 w="100%"
                 pb="4"
               >
-                {format(new Date(comment.date.seconds * 1000), 'do MMM yyyy')}
+                {format(new Date(comment.date.seconds * 1000), "do MMM yyyy")}
               </Text>
               <Text fontWeight="bold" fontSize="md">
                 {comment.comment}
@@ -92,7 +92,7 @@ export default function Comment({ comment }: { comment: any }) {
       <Box borderRadius="lg" bgColor="gray.700" p="4" w="100%">
         <HStack>
           <Wrap>
-            {comment.sentiment_cat.category.map((cat: string) => (
+            {comment.sentiment_cat.category?.map((cat: string) => (
               <WrapItem key={cat}>
                 <Badge
                   rounded="md"
@@ -122,7 +122,7 @@ export default function Comment({ comment }: { comment: any }) {
               align="start"
               w="100%"
             >
-              {format(new Date(comment.date.seconds * 1000), 'do MMM yyyy')}
+              {format(new Date(comment.date.seconds * 1000), "do MMM yyyy")}
             </Text>
             <Spacer />
             <Text fontWeight="bold" fontSize="md" noOfLines={5}>
@@ -159,13 +159,13 @@ export default function Comment({ comment }: { comment: any }) {
               py={3}
               mr={3}
               m="2"
-              colorScheme={comment.agency_reviewed ? 'green' : 'gray'}
+              colorScheme={comment.agency_reviewed ? "green" : "gray"}
             >
-              {comment.agency_reviewed ? 'Reviewed' : 'Notified'}
+              {comment.agency_reviewed ? "Reviewed" : "Notified"}
             </Badge>
           </Wrap>
         </HStack>
       </Box>
     </>
-  )
+  );
 }
