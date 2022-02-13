@@ -13,7 +13,7 @@ function Footer() {
         onClick={() => {
           router.push('/')
         }}
-        rightIcon={<ArrowBackIcon w={6} h={6} />}
+        leftIcon={<ArrowBackIcon w={6} h={6} />}
       >
         Back to home
       </Button>

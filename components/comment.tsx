@@ -19,16 +19,13 @@ import { FaExpandAlt, FaRegCheckSquare } from 'react-icons/fa'
 export default function Comment({ comment }: { comment: any }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const sentimentColor = (label: string) => {
-    switch (label) {
-      case 'NEG':
-        return 'red'
-      case 'NEU':
-        return 'gray'
-      case 'POS':
-        return 'green'
-      default:
-        break
+  const sentimentColor = (score: number) => {
+    if (score >= 0.25 && score <= 1.0) {
+      return 'green'
+    } else if (score >= -1.0 && score <= -0.25) {
+      return 'red'
+    } else {
+      return 'gray'
     }
   }
 
@@ -43,6 +40,19 @@ export default function Comment({ comment }: { comment: any }) {
       </Modal>
       <Box w="100%" h="100%" borderRadius="lg" bgColor="gray.700">
         <HStack>
+          {comment.sentiment_cat.category.map((cat) => {
+            return (
+              <Badge
+                key={cat}
+                rounded="md"
+                p={1}
+                colorScheme="pink"
+                fontWeight="extrabold"
+              >
+                {cat}
+              </Badge>
+            )
+          })}
           <Spacer />
           <IconButton
             onClick={onOpen}
@@ -50,7 +60,7 @@ export default function Comment({ comment }: { comment: any }) {
             icon={<FaExpandAlt />}
           />
         </HStack>
-        <HStack>
+        <HStack mr={5}>
           <Upvotes count={comment.vote_score} />
           <Text fontWeight="bold" fontSize="md" noOfLines={5}>
             {comment.comment}
@@ -72,9 +82,9 @@ export default function Comment({ comment }: { comment: any }) {
             px={4}
             py={3}
             mr={3}
-            colorScheme={sentimentColor(comment.sentiment_label)}
+            colorScheme={sentimentColor(comment.sentiment_cat.sentiment)}
           >
-            {comment.sentiment_label}
+            {comment.sentiment_cat.sentiment.toPrecision(2)}
           </Badge>
           <IconButton aria-label="check" icon={<FaRegCheckSquare />} />
         </HStack>

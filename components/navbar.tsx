@@ -43,7 +43,7 @@ function Navbar() {
       <Spacer />
       <Button
         leftIcon={<FaRegEdit />}
-        colorScheme="purple"
+        colorScheme="telegram"
         mx={3}
         px={3}
         size="2xl"
@@ -56,7 +56,7 @@ function Navbar() {
       <Button
         mx={3}
         px={3}
-        colorScheme="purple"
+        colorScheme="telegram"
         size="2xl"
         variant="ghost"
         onClick={() => router.push('about')}
