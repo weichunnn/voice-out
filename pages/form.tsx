@@ -16,12 +16,12 @@ import {
   useToast,
 } from "@chakra-ui/react";
 
-import Constants from "../data/Constants";
 import { db } from "../firebase-config";
 import { addDoc, collection } from "firebase/firestore";
 import Footer from "../components/footer";
 import { EmailIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
+import us_details from "../data/us.json";
 
 const Home: NextPage = () => {
   const toast = useToast();
@@ -119,7 +119,7 @@ const Home: NextPage = () => {
                     required: "This is required",
                   })}
                 >
-                  {Constants.state.map((state) => (
+                  {us_details.state.map((state) => (
                     <option key={state}>{state}</option>
                   ))}
                 </Select>
@@ -137,7 +137,7 @@ const Home: NextPage = () => {
                   required: "This is required",
                 })}
               >
-                {Constants.agencies.map((agency) => (
+                {us_details.agencies.map((agency) => (
                   <option key={agency}>{agency}</option>
                 ))}
               </Select>
