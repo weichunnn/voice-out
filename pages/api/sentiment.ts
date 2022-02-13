@@ -27,6 +27,7 @@ export default async function handler(
     const sentiment = sentiment_res.documentSentiment
     const sentences = sentiment_res.sentences
     const [classification] = await client.classifyText({ document })
+
     // console.log('Document sentiment:')
     // console.log(`  Score: ${sentiment.score}`)
     // console.log(`  Magnitude: ${sentiment.magnitude}`)
