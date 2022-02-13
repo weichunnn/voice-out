@@ -1,20 +1,19 @@
-import React from 'react'
+import React from "react";
 import {
   Box,
   Text,
-  Stack,
   Link,
   List,
   ListItem,
   ListIcon,
   Image,
   VStack,
-} from '@chakra-ui/react'
-import { FaLinkedin, FaGithubSquare } from 'react-icons/fa'
-import Footer from '../components/footer'
+} from "@chakra-ui/react";
+import { FaLinkedin, FaGithubSquare } from "react-icons/fa";
+import Footer from "../components/footer";
 
 function About() {
-  const GITHUB_URL = 'https://github.com/weichunnn/voice-out'
+  const GITHUB_URL = "https://github.com/weichunnn/voice-out";
 
   return (
     <>
@@ -80,7 +79,7 @@ function About() {
       </Box>
       <Footer />
     </>
-  )
+  );
 }
 
-export default About
+export default About;
