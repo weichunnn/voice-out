@@ -1,5 +1,5 @@
-import type { NextPage } from 'next'
-import { useForm } from 'react-hook-form'
+import type { NextPage } from "next";
+import { useForm } from "react-hook-form";
 import {
   Box,
   Text,
@@ -14,71 +14,72 @@ import {
   Center,
   HStack,
   useToast,
-} from '@chakra-ui/react'
+} from "@chakra-ui/react";
 
-import { db } from '../firebase-config'
-import { addDoc, collection } from 'firebase/firestore'
-import Footer from '../components/footer'
-import { EmailIcon } from '@chakra-ui/icons'
-import { useRouter } from 'next/router'
-import us_details from '../data/us.json'
+import { db } from "../firebase-config";
+import { addDoc, collection } from "firebase/firestore";
+import Footer from "../components/footer";
+import { EmailIcon } from "@chakra-ui/icons";
+import { useRouter } from "next/router";
+import us_details from "../data/us.json";
 
 const Home: NextPage = () => {
-  const toast = useToast()
-  const router = useRouter()
+  const toast = useToast();
+  const router = useRouter();
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-  } = useForm()
+  } = useForm();
 
   const getSentimentScore = async (text: string) => {
     const res = await fetch(`/api/sentiment?q=${text}`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-    })
-    const data = await res.json()
-    const sentiment = data.score
-    let category = []
+    });
+    const data = await res.json();
+    const sentiment = data.score;
+    let category = [];
     if (data.categories[0]) {
-      category = data.categories[0].name.split('/')
-      category.shift()
+      category = data.categories[0].name.split("/");
+      category.shift();
     }
 
-    return { sentiment, category }
-  }
+    return { sentiment, category };
+  };
 
   const onSubmit = async (values: any) => {
     try {
-      const docRef = await addDoc(collection(db, 'comments'), {
+      const docRef = await addDoc(collection(db, "comments"), {
         ...values,
         vote_score: 1, // increment own comment
         sentiment_cat: await getSentimentScore(values.comment),
         agency_reviewed: false,
         date: new Date(),
-      })
-
-      localStorage.setItem(docRef.id + '-up', 'true')
+      });
+      if (typeof window !== "undefined") {
+        localStorage.setItem(docRef.id + "-up", "true");
+      }
       toast({
-        title: 'Comment Submitted.',
-        description: 'Thank you for submitted your comments to VoiceOut',
-        status: 'success',
+        title: "Comment Submitted.",
+        description: "Thank you for submitted your comments to VoiceOut",
+        status: "success",
         duration: 4500,
         isClosable: true,
-      })
-      router.push('/')
+      });
+      router.push("/");
     } catch (e: any) {
       toast({
-        title: 'Something wrong happened.',
+        title: "Something wrong happened.",
         description: e.message,
-        status: 'error',
+        status: "error",
         duration: 4500,
         isClosable: true,
-      })
+      });
     }
-  }
+  };
 
   return (
     <>
@@ -105,8 +106,8 @@ const Home: NextPage = () => {
                 <Select
                   id="country"
                   placeholder="Select country"
-                  {...register('country', {
-                    required: 'This is required',
+                  {...register("country", {
+                    required: "This is required",
                   })}
                 >
                   <option>United States</option>
@@ -124,8 +125,8 @@ const Home: NextPage = () => {
                 <Select
                   id="state"
                   placeholder="Select state"
-                  {...register('state', {
-                    required: 'This is required',
+                  {...register("state", {
+                    required: "This is required",
                   })}
                 >
                   {us_details.state.map((state) => (
@@ -146,8 +147,8 @@ const Home: NextPage = () => {
               <Select
                 id="agency"
                 placeholder="Select agency"
-                {...register('agency', {
-                  required: 'This is required',
+                {...register("agency", {
+                  required: "This is required",
                 })}
               >
                 {us_details.agencies.map((agency) => (
@@ -168,16 +169,16 @@ const Home: NextPage = () => {
                 id="comment"
                 placeholder="The department did a great job in maintaining the community garden"
                 resize="vertical"
-                {...register('comment', {
-                  required: 'This is required',
+                {...register("comment", {
+                  required: "This is required",
                   minLength: {
                     value: 100,
-                    message: 'Please write a more descriptive comment',
+                    message: "Please write a more descriptive comment",
                   },
                   maxLength: {
                     value: 1000,
                     message:
-                      'We appreciate long comments, but this may be a little too long.',
+                      "We appreciate long comments, but this may be a little too long.",
                   },
                 })}
               />
@@ -194,10 +195,10 @@ const Home: NextPage = () => {
                 <Input
                   id="email"
                   type="email"
-                  {...register('email', {
+                  {...register("email", {
                     pattern: {
                       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: 'invalid email address',
+                      message: "invalid email address",
                     },
                   })}
                 />
@@ -213,10 +214,10 @@ const Home: NextPage = () => {
                 <Input
                   id="name"
                   placeholder="John Doe"
-                  {...register('name', {
+                  {...register("name", {
                     minLength: {
                       value: 4,
-                      message: 'Minimum length should be 4',
+                      message: "Minimum length should be 4",
                     },
                   })}
                 />
@@ -245,7 +246,7 @@ const Home: NextPage = () => {
       </Box>
       <Footer />
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
