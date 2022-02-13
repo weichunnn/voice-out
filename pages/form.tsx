@@ -41,8 +41,11 @@ const Home: NextPage = () => {
     })
     const data = await res.json()
     const sentiment = data.score
-    const category = data.categories[0].name.split('/')
-    category.shift()
+    let category = []
+    if (data.categories[0]) {
+      category = data.categories[0].name.split('/')
+      category.shift()
+    }
 
     return { sentiment, category }
   }

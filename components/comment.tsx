@@ -27,11 +27,11 @@ export default function Comment({ comment }: { comment: any }) {
 
   const sentimentColor = (score: number) => {
     if (score >= 0.25 && score <= 1.0) {
-      return 'green'
+      return ['green', '😀']
     } else if (score >= -1.0 && score <= -0.25) {
-      return 'red'
+      return ['red', '😡']
     } else {
-      return 'gray'
+      return ['yellow', '😐']
     }
   }
 
@@ -145,12 +145,13 @@ export default function Comment({ comment }: { comment: any }) {
           <Wrap shouldWrapChildren>
             <Badge
               rounded="md"
-              m="2"
-              px={4}
-              py={3}
-              colorScheme={sentimentColor(comment.sentiment_cat.sentiment)}
+              m={2}
+              px={2}
+              py={1}
+              fontSize="2xl"
+              colorScheme={sentimentColor(comment.sentiment_cat.sentiment)[0]}
             >
-              {comment.sentiment_cat.sentiment.toPrecision(2)}
+              {sentimentColor(comment.sentiment_cat.sentiment)[1]}
             </Badge>
             <Badge
               rounded="md"
