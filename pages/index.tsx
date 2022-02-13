@@ -8,37 +8,37 @@ import {
   RadioGroup,
   Radio,
   HStack,
-} from "@chakra-ui/react";
-import Comment from "../components/comment";
-import { db } from "../firebase-config";
+} from '@chakra-ui/react'
+import Comment from '../components/comment'
+import { db } from '../firebase-config'
 import {
   getDocs,
   collection,
   query,
   orderBy,
   OrderByDirection,
-} from "firebase/firestore";
-import { useState, useEffect } from "react";
+} from 'firebase/firestore'
+import { useState, useEffect } from 'react'
 
 export default function Comments() {
-  const [comments, setComments] = useState([]);
-  const [filter, setFilter] = useState("vote_score");
-  const [dir, setDir] = useState<OrderByDirection>("desc");
+  const [comments, setComments] = useState([])
+  const [filter, setFilter] = useState('vote_score')
+  const [dir, setDir] = useState<OrderByDirection>('desc')
 
   useEffect(() => {
     const getResults = async () => {
-      const commentsRef = collection(db, "comments");
-      const q = query(commentsRef, orderBy(filter, dir));
-      const querySnapshot = await getDocs(q);
-      let commentArr: any = [];
+      const commentsRef = collection(db, 'comments')
+      const q = query(commentsRef, orderBy(filter, dir))
+      const querySnapshot = await getDocs(q)
+      let commentArr: any = []
       querySnapshot.forEach((doc) =>
         commentArr.push({ id: doc.id, ...doc.data() })
-      );
-      setComments(commentArr);
-    };
+      )
+      setComments(commentArr)
+    }
 
-    getResults();
-  }, [dir, filter]);
+    getResults()
+  }, [dir, filter])
 
   return (
     <VStack spacing={10}>
@@ -68,14 +68,16 @@ export default function Comments() {
       <Wrap spacing="20px" justify="center" p="10" w="100%">
         {comments.length
           ? comments.map((comment, index) => (
-              <WrapItem key={index} w="30%">
+              <WrapItem key={index} w="45%">
                 <Comment comment={comment} />
               </WrapItem>
             ))
           : Array(5)
               .fill(undefined)
-              .map(() => <Skeleton height="200px" w="40%" rounded="lg" />)}
+              .map((_, index) => (
+                <Skeleton key={index} height="200px" w="40%" rounded="lg" />
+              ))}
       </Wrap>
     </VStack>
-  );
+  )
 }
