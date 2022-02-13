@@ -7,7 +7,7 @@ function Footer() {
   const router = useRouter()
 
   return (
-    <Center mt={10} mb={100} as="kbd">
+    <Center mt={7} mb={3} as="kbd">
       <Text as="u" color="teal.100" fontSize="xl" fontWeight="extrabold"></Text>
       <Button
         onClick={() => {

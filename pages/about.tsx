@@ -7,27 +7,49 @@ import {
   List,
   ListItem,
   ListIcon,
+  Image,
+  VStack,
 } from '@chakra-ui/react'
-import { FaLinkedin } from 'react-icons/fa'
+import { FaLinkedin, FaGithubSquare } from 'react-icons/fa'
 import Footer from '../components/footer'
 
 function About() {
-  const GITHUB_URL = 'https://github.com/'
+  const GITHUB_URL = 'https://github.com/weichunnn/voice-out'
 
   return (
     <>
       <Box textAlign="center" fontSize="xl" as="kbd">
-        <Stack spacing={10}>
+        <VStack spacing={10}>
           <Text fontSize="5xl" fontWeight="bold" color="tomato">
             About
           </Text>
-          <Text fontSize="xl" color="gray.200" noOfLines={3} mx={10}>
-            A place to voice out your thoughts to government agency, good or
+          <Image
+            display="block"
+            boxSize="170px"
+            htmlHeight="10px"
+            htmlWidth="10px"
+            src="people.png"
+            alt="Dan Abramov"
+          />
+          <Text fontSize="2xl" color="gray.400" noOfLines={3} mx={10}>
+            A place to voice out your thoughts to government agencies, good or
             bad.
           </Text>
-          <Text color="teal.200" noOfLines={2}>
-            Tech Stack: Next.JS, React, ChakraUI, TypeScript
+          <Text
+            color="blue.200"
+            noOfLines={2}
+            decoration="underline"
+            fontWeight="bold"
+            fontSize="2xl"
+          >
+            Tech Stack
           </Text>
+          <Box>
+            <Text>Front-End: Next JS, React, TypeScript</Text>
+            <Text>Database: Cloud Firestore</Text>
+            <Text>Machine Learning: Natural Language API by Google Cloud</Text>
+          </Box>
+
           <List spacing={2}>
             <Text
               color="blue.200"
@@ -51,13 +73,10 @@ function About() {
               Tan Wei Chun
             </ListItem>
           </List>
-          <Text color="orange.400" noOfLines={2}>
-            Check out our{' '}
-            <Link href={GITHUB_URL} isExternal>
-              <Text as="u">Github Repo</Text>
-            </Link>
-          </Text>
-        </Stack>
+          <Link href={GITHUB_URL} isExternal>
+            <FaGithubSquare size={40} />
+          </Link>
+        </VStack>
       </Box>
       <Footer />
     </>

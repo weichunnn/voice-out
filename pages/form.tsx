@@ -16,11 +16,14 @@ import {
   useToast,
 } from '@chakra-ui/react'
 
+import Constants from '../data/Constants'
+import { db } from '../firebase-config'
+import { doc, addDoc, collection } from 'firebase/firestore'
 import Footer from '../components/footer'
 import { EmailIcon } from '@chakra-ui/icons'
 
 const Home: NextPage = () => {
-  const agencies = ['POTUS', 'FireStation', 'NASA']
+  const agencies = Constants.agencies
   const toast = useToast()
 
   const {
@@ -29,12 +32,35 @@ const Home: NextPage = () => {
     formState: { errors, isSubmitting },
   } = useForm()
 
-  const onSubmit = (values: any) => {
+  const getSentimentScore = async (text: string) => {
+    const res = await fetch(`/api/gcsentiment?q=${text}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    const data = await res.json()
+    console.log(data)
+    const sentiment = data.score
+    const category = data.categories[0].name.split('/')
+    category.shift()
+
+    return { sentiment, category }
+  }
+
+  const onSubmit = async (values: any) => {
     try {
-      console.log('this si the values', { ...values, date: new Date() })
+      await addDoc(collection(db, 'comments'), {
+        ...values,
+        vote_score: 0,
+        sentiment_cat: await getSentimentScore(values.comment),
+        date: new Date(),
+      })
+
+      console.log('this is the values', { ...values, date: new Date() })
       toast({
         title: 'Comment Submitted.',
-        description: "We've submitted your account to Voice Out",
+        description: "We've submitted your comment to Voice Out",
         status: 'success',
         duration: 4500,
         isClosable: true,
@@ -60,7 +86,7 @@ const Home: NextPage = () => {
         justifyContent="center"
         flexDirection="column"
       >
-        <Text fontSize="3xl" fontWeight="bold" mt={10} mb={20}>
+        <Text fontSize="3xl" fontWeight="bold" mt={10} mb={10}>
           Submit Comment
         </Text>
         <Box w="60%" p={10} rounded="lg" border="2px" borderColor="gray.300">
@@ -90,7 +116,9 @@ const Home: NextPage = () => {
                     required: 'This is required',
                   })}
                 >
-                  <option>United States</option>
+                  {Constants.state.map((state) => (
+                    <option key={state}>{state}</option>
+                  ))}
                 </Select>
                 <FormErrorMessage>
                   {errors.state && errors.state.message}
