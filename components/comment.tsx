@@ -14,6 +14,7 @@ import {
   VStack,
   Button,
   Link,
+  Wrap,
 } from "@chakra-ui/react";
 import { FaExpandAlt, FaMailBulk } from "react-icons/fa";
 import { format } from "date-fns";
@@ -87,9 +88,9 @@ export default function Comment({ comment }: { comment: any }) {
           </ModalBody>
         </ModalContent>
       </Modal>
-      <Box borderRadius="lg" bgColor="gray.700" p="4">
+      <Box borderRadius="lg" bgColor="gray.700" p="4" w="100%">
         <HStack>
-          {comment.sentiment_cat.category.map((cat: any) => (
+          {comment.sentiment_cat.category.map((cat: string) => (
             <Badge
               key={cat}
               rounded="md"
@@ -125,35 +126,39 @@ export default function Comment({ comment }: { comment: any }) {
             </Text>
           </VStack>
         </HStack>
-        <HStack>
+        <HStack w="100%" flexWrap="wrap">
           <Badge
             rounded="md"
             px={4}
             py={3}
+            m="2"
             colorScheme="blue"
             fontWeight="extrabold"
           >
             {comment.agency}
           </Badge>
           <Spacer />
-          <Badge
-            rounded="md"
-            px={4}
-            py={3}
-            mr={3}
-            colorScheme={sentimentColor(comment.sentiment_cat.sentiment)}
-          >
-            {comment.sentiment_cat.sentiment.toPrecision(2)}
-          </Badge>
-          <Badge
-            rounded="md"
-            px={4}
-            py={3}
-            mr={3}
-            colorScheme={comment.agency_reviewed ? "green" : "gray"}
-          >
-            {comment.agency_reviewed ? "Reviewed" : "Notified"}
-          </Badge>
+          <Wrap shouldWrapChildren>
+            <Badge
+              rounded="md"
+              m="2"
+              px={4}
+              py={3}
+              colorScheme={sentimentColor(comment.sentiment_cat.sentiment)}
+            >
+              {comment.sentiment_cat.sentiment.toPrecision(2)}
+            </Badge>
+            <Badge
+              rounded="md"
+              px={4}
+              py={3}
+              mr={3}
+              m="2"
+              colorScheme={comment.agency_reviewed ? "green" : "gray"}
+            >
+              {comment.agency_reviewed ? "Reviewed" : "Notified"}
+            </Badge>
+          </Wrap>
         </HStack>
       </Box>
     </>

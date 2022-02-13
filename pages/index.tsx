@@ -65,11 +65,10 @@ export default function Comments() {
           </HStack>
         </RadioGroup>
       </HStack>
-
-      <Wrap spacing="20px" w="100%" justify="center" pb="20">
+      <Wrap spacing="20px" justify="center" p="10" w="100%">
         {comments.length
           ? comments.map((comment, index) => (
-              <WrapItem key={index} w="40%">
+              <WrapItem key={index} w="30%">
                 <Comment comment={comment} />
               </WrapItem>
             ))

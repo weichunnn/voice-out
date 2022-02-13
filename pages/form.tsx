@@ -96,7 +96,11 @@ const Home: NextPage = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <HStack mb="10" w="100%" justifyContent="space-between">
               <FormControl isInvalid={errors.country} w="45%">
-                <FormLabel htmlFor="country">Country</FormLabel>
+                <FormLabel htmlFor="country">
+                  <HStack>
+                    <Text>Country</Text> <Text color="red">*</Text>
+                  </HStack>
+                </FormLabel>
                 <Select
                   id="country"
                   placeholder="Select country"
@@ -111,7 +115,11 @@ const Home: NextPage = () => {
                 </FormErrorMessage>
               </FormControl>
               <FormControl isInvalid={errors.state} w="45%">
-                <FormLabel htmlFor="state">State</FormLabel>
+                <FormLabel htmlFor="state">
+                  <HStack>
+                    <Text>State</Text> <Text color="red">*</Text>
+                  </HStack>
+                </FormLabel>
                 <Select
                   id="state"
                   placeholder="Select state"
@@ -129,7 +137,11 @@ const Home: NextPage = () => {
               </FormControl>
             </HStack>
             <FormControl isInvalid={errors.agency} mb="10" w="45%">
-              <FormLabel htmlFor="agency">Agency</FormLabel>
+              <FormLabel htmlFor="agency">
+                <HStack>
+                  <Text>Agency</Text> <Text color="red">*</Text>
+                </HStack>
+              </FormLabel>
               <Select
                 id="agency"
                 placeholder="Select agency"
@@ -146,7 +158,11 @@ const Home: NextPage = () => {
               </FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={errors.comment} mb="10">
-              <FormLabel htmlFor="comment">Comment</FormLabel>
+              <FormLabel htmlFor="comment">
+                <HStack>
+                  <Text>Comment</Text> <Text color="red">*</Text>
+                </HStack>
+              </FormLabel>
               <Textarea
                 id="comment"
                 placeholder="The department did a great job in maintaining the community garden"
@@ -185,7 +201,7 @@ const Home: NextPage = () => {
                   })}
                 />
                 <FormHelperText>
-                  Your email will be shared to related agency
+                  (Optional) Your email will be shared to related agency
                 </FormHelperText>
                 <FormErrorMessage>
                   {errors.email && errors.email.message}
@@ -204,9 +220,8 @@ const Home: NextPage = () => {
                   })}
                 />
                 <FormHelperText>
-                  Your name will be shared to related agency
+                  (Optional) Your name will be shared to related agency
                 </FormHelperText>
-
                 <FormErrorMessage>
                   {errors.name && errors.name.message}
                 </FormErrorMessage>
